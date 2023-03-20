@@ -575,27 +575,27 @@
 							<div class="row">
 								<div class="col col-m-12 col-t-6 col-d-6">
 									<div class="value">
-										<input id="name" type="text" name="name" placeholder="Name *" />
+										<input id="name" type="text" name="name" placeholder="Name *" required/>
 									</div>
 								</div>
 								<div class="col col-m-12 col-t-6 col-d-6">
 									<div class="value">
-										<input id="phone" type="tel" name="tel" placeholder="Phone *" />
+										<input id="phone" type="tel" name="tel" placeholder="Phone *" required/>
 									</div>
 								</div>
 								<div class="col col-m-12 col-t-6 col-d-6">
 									<div class="value">
-										<input id="email" type="text" name="email" placeholder="Email *" />
+										<input id="email" type="text" name="email" placeholder="Email *" required/>
 									</div>
 								</div>
 								<div class="col col-m-12 col-t-6 col-d-6">
 									<div class="value">
-										<input id="subject" type="text" name="subject" placeholder="Subject *" />
+										<input id="subject" type="text" name="subject" placeholder="Subject *" required/>
 									</div>
 								</div>
 								<div class="col col-m-12 col-t-12 col-d-12">
 									<div class="value">
-										<textarea id="message" name="message" placeholder="Message"></textarea>
+										<textarea id="message" name="message" placeholder="Message" required></textarea>
 									</div>
 								</div>
 								<div class="col col-m-12 col-t-12 col-d-12">
@@ -603,8 +603,9 @@
 								</div>
 							</div>
 						</form>
+						<div class="spinner-7"></div>
 						<div class="alert-success">
-							<p>Thanks, your message is sent successfully. We will contact you shortly!</p>
+							<p>Thanks, your message is sent successfully.I will contact you shortly!</p>
 						</div>
 					</div>
 				</div>
@@ -646,8 +647,11 @@
 <!-- Mirrored from bslthemes.com/html/hendrix/theme_colors/default/index-particles.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 Mar 2023 11:02:25 GMT -->
 </html>
 <script>
-
-	const handleSubmit=(event)=>{
+var spinner = document.querySelector(".spinner-7");
+var submitbtn = document.querySelector(".btn");
+const handleSubmit=(event)=>{
+	    spinner.style.display="block"; 
+		submitbtn.style.display="none";
 		event.preventDefault();
 		const formData = new FormData();
 		const name = document.getElementById("name").value;
@@ -656,10 +660,10 @@
 		const subject = document.getElementById("subject").value;
 		const message = document.getElementById("message").value;
 		formData.append("name",name);
-		formData.append("phone",name);
-		formData.append("email",name);
-		formData.append("subject",name);
-		formData.append("message",name);
+		formData.append("phone",phone);
+		formData.append("email",email);
+		formData.append("subject",subject);
+		formData.append("message",message);
 		fetch("https://sheet.best/api/sheets/4d947e22-9785-42eb-a60d-2031dfb29083", {
     method: 'POST',
     body: formData
@@ -667,15 +671,15 @@
   .then(response =>
   {
 	response.json()
-	doc
   })
-  .then(data => console.log(data))
+  .then(data =>{
+    console.log("submitted");
+	spinner.style.display="none"; 
+	const success = document.querySelector(".alert-success")
+	success.style.display="block";
+  })
   .catch(error => console.error(error));
-
-  $('#image').click(function() {
-    
-});
-	}
+}
 
 
 </script>
